@@ -1,0 +1,6 @@
+.message-container > li {
+  padding: 0.5rem 0.5rem 0 0.5rem;
+  &:first-child {
+    padding-top: 0;
+  }
+}
