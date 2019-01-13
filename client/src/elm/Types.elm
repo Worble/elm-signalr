@@ -6,12 +6,12 @@ import Http
 type alias Model =
     { message : String
     , messages : List MessageData
-    , name : String
+    , username : String
     }
 
 
 type alias MessageData =
-    { name : String
+    { username : String
     , message : String
     }
 

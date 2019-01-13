@@ -17,10 +17,10 @@ update msg model =
             ( { model | message = message }, Cmd.none )
 
         SendMessage ->
-            ( { model | message = "" }, sendMessage { name = model.name, message = model.message } )
+            ( { model | message = "" }, sendMessage { username = model.username, message = model.message } )
 
         UpdateName name ->
-            ( { model | name = name }, Cmd.none )
+            ( { model | username = name }, Cmd.none )
 
 
 

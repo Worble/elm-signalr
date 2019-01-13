@@ -13,7 +13,7 @@ view model =
         [ div [ class "row" ]
             [ label []
                 [ text "Name: "
-                , input [ onInput UpdateName, value model.name ] []
+                , input [ onInput UpdateName, value model.username ] []
                 ]
             ]
         , if List.isEmpty model.messages then
@@ -34,7 +34,7 @@ view model =
 displayMessage : MessageData -> Html Msg
 displayMessage messageData =
     li []
-        [ span [ class "message-name" ] [ text <| messageData.name ++ ": " ]
+        [ span [ class "message-name" ] [ text <| messageData.username ++ ": " ]
         , text messageData.message
         ]
 

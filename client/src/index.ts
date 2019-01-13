@@ -12,12 +12,20 @@ import * as signalR from "@aspnet/signalr";
   });
 
   interface MessageData {
-    name: string;
+    username: string;
     message: string;
   }
 
+  interface RollData {
+    username: string;
+    diceType: number;
+    diceAmount: number;
+    diceTotal: number;
+    rolls: number[];
+  }
+
   app.ports.sendMessage.subscribe(function(data: MessageData) {
-    send(data.name, data.message);
+    send(data);
   });
 
   const connection = new signalR.HubConnectionBuilder()
@@ -27,10 +35,21 @@ import * as signalR from "@aspnet/signalr";
   connection.start().catch(err => console.log(err));
 
   connection.on("messageReceived", (username: string, message: string) => {
-    app.ports.receiveMessage.send({ name: username, message: message });
+    app.ports.receiveMessage.send({ username: username, message: message });
   });
 
-  function send(username: string, message: string) {
-    connection.send("newMessage", username, message);
+  connection.on("rollReceived", (rolls: RollData) => {
+    app.ports.receiveMessage.send({
+      username: rolls.username,
+      message: `rolled ${rolls.diceAmount} d${rolls.diceType} and got ${
+        rolls.diceTotal
+      } (${rolls.rolls.map(function(number) {
+        return `${number}`;
+      })})`
+    });
+  });
+
+  function send(data: MessageData) {
+    connection.send("newMessage", data);
   }
 })();
